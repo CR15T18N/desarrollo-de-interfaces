@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class Ejercicio2 extends Application {
+public class Ejercicio2_1 extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -22,7 +22,7 @@ public class Ejercicio2 extends Application {
 			
 			Rectangle r1 = new Rectangle(400,400,Color.DARKGREEN);
 			Rectangle r2 = new Rectangle(300,300,Color.GREEN);
-			Rectangle r3 = new Rectangle(200,00,Color.LIGHTGREEN);
+			Rectangle r3 = new Rectangle(200,200,Color.LIGHTGREEN);
 			
 			panel.getChildren().addAll(r1, r2, r3);
 			
