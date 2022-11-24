@@ -2,7 +2,10 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,10 +21,10 @@ public class IndexController {
 	private TextField txtPrecio;
 	
 	@FXML
-	private ChoiceBox<String> cbConsola;
+	private ChoiceBox cbConsola;
 	
 	@FXML
-	private ChoiceBox<String> cbPegi;
+	private ChoiceBox cbPegi;
 	
 	@FXML
 	private TableView <Videojuego> tableVideojuegos;
@@ -39,9 +42,7 @@ public class IndexController {
 	private TableColumn <Videojuego, String> columnPegi;
 	
 	private ObservableList<Videojuego> listaVideojuedos =
-			FXCollections.observableArrayList(
-					new Videojuego("God of War", (float) 19.99, "PlayStation 5", "18")
-			);
+			FXCollections.observableArrayList(new Videojuego("God of War", 19.99f, "PlayStation 5", "18"));
 	
 	public ObservableList<String> listaConsolas =
 			FXCollections.observableArrayList("Nintendo Switch", "PlayStation 5", "Xbox Series X", "Xbox Series S");
@@ -51,6 +52,7 @@ public class IndexController {
 	
 	@FXML
 	private void initialize() {
+		
 		cbConsola.setItems(listaConsolas);
 		cbPegi.setItems(listaPegi);
 		
@@ -59,6 +61,10 @@ public class IndexController {
 		columnConsola.setCellValueFactory(new PropertyValueFactory<>("consola"));
 		columnPegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
 		
-		tableVideojuegos.setItems(listaVideojuedos); 
+		tableVideojuegos.setItems(listaVideojuedos);
 	}
+	
+	public void handleButtonPress(ActionEvent event) {
+		
+    }
 }

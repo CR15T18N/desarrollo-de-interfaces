@@ -10,7 +10,9 @@ public class Videojuego {
 	private SimpleStringProperty consola;
 	private SimpleStringProperty pegi;
 	
-	public Videojuego(String nombre, float precio, String consola, String pegi) {
+	public Videojuego(String nombre, float precio, 
+			String consola, String pegi) {
+		
 		this.nombre = new SimpleStringProperty(nombre);
 		this.precio = new SimpleFloatProperty(precio);
 		this.consola = new SimpleStringProperty(consola);
@@ -48,6 +50,5 @@ public class Videojuego {
 	public void setPegi(String pegi) {
 		this.pegi = new SimpleStringProperty(pegi);
 	}
-	
 	
 }
