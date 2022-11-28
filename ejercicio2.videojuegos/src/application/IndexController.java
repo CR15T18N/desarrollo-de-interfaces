@@ -3,7 +3,6 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -41,6 +40,9 @@ public class IndexController {
 	@FXML
 	private TableColumn <Videojuego, String> columnPegi;
 	
+	@FXML
+	private Button btnAniadir;
+	
 	private ObservableList<Videojuego> listaVideojuedos =
 			FXCollections.observableArrayList(new Videojuego("God of War", 19.99f, "PlayStation 5", "18"));
 	
@@ -64,7 +66,20 @@ public class IndexController {
 		tableVideojuegos.setItems(listaVideojuedos);
 	}
 	
-	public void handleButtonPress(ActionEvent event) {
+	@FXML
+	public void aniadirVideojuego(ActionEvent event) {
+		Videojuego v = new  Videojuego(
+				txtNombre.getText(),
+				Float.parseFloat(txtPrecio.getText()),
+				cbConsola.getValue().toString(),
+				cbPegi.getValue().toString()
+		);
 		
+		listaVideojuedos.add(v);
+		
+		txtNombre.clear();
+		txtPrecio.clear();
+		cbConsola.getSelectionModel().clearSelection();
+		cbPegi.getSelectionModel().clearSelection();
     }
 }
