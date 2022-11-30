@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -43,6 +45,9 @@ public class IndexController {
 	@FXML
 	private Button btnAniadir;
 	
+	@FXML
+	private Button btnBorrar;
+	
 	private ObservableList<Videojuego> listaVideojuedos =
 			FXCollections.observableArrayList(new Videojuego("God of War", 19.99f, "PlayStation 5", "18"));
 	
@@ -68,18 +73,53 @@ public class IndexController {
 	
 	@FXML
 	public void aniadirVideojuego(ActionEvent event) {
-		Videojuego v = new  Videojuego(
-				txtNombre.getText(),
-				Float.parseFloat(txtPrecio.getText()),
-				cbConsola.getValue().toString(),
-				cbPegi.getValue().toString()
-		);
-		
-		listaVideojuedos.add(v);
-		
-		txtNombre.clear();
-		txtPrecio.clear();
-		cbConsola.getSelectionModel().clearSelection();
-		cbPegi.getSelectionModel().clearSelection();
+		if (txtNombre.getText().isEmpty()||txtPrecio.getText().isEmpty()||cbConsola.getSelectionModel().isEmpty()||cbPegi.getSelectionModel().isEmpty()) {
+			
+			Alert alerta = new Alert(AlertType.ERROR);
+			alerta.setTitle("Informacion incompleta");
+			alerta.setHeaderText("Falta informacion del videojuego");
+			alerta.setContentText("Por favor, introduzca todos los campos");
+			alerta.showAndWait();
+			
+		}else {
+			if (esNumero(txtPrecio.getText())) {
+				Videojuego v = new  Videojuego(
+						txtNombre.getText(),
+						Float.parseFloat(txtPrecio.getText()),
+						cbConsola.getValue().toString(),
+						cbPegi.getValue().toString()
+				);
+				
+				listaVideojuedos.add(v);
+				
+				txtNombre.clear();
+				txtPrecio.clear();
+				cbConsola.getSelectionModel().clearSelection();
+				cbPegi.getSelectionModel().clearSelection();
+			} else {
+				Alert alerta = new Alert(AlertType.ERROR);
+				alerta.setTitle("Error al insertar");
+				alerta.setHeaderText("No se ha introducido un numero en el precio");
+				alerta.setContentText("Por favor, introduzca un numero en el precio");
+				alerta.showAndWait();
+			}
+		}
     }
+	
+	@FXML
+	public void borrarVideojuego(ActionEvent event) {
+		
+		int inidiceSeleccionado = tableVideojuegos.getSelectionModel().getSelectedIndex();
+		
+		tableVideojuegos.getItems().remove(inidiceSeleccionado);
+	}
+	
+	public boolean esNumero (String s) {
+		try {
+			Float.parseFloat(s);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 }

@@ -84,12 +84,12 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="btnBorrar" mnemonicParsing="false" text="Borrar">
+                              <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#borrarVideojuego" text="Borrar">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#aniadirLibro" text="Añadir">
+                              <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#aniadirVideojuego" text="Añadir">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
