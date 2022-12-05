@@ -1,5 +1,10 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,7 +76,35 @@ public class IndexController {
 		columnAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
 		columnPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
 		
-		tableLibros.setItems(listaLibros); 
+		ObservableList listaLibrosBD= getLibrosBD();
+		
+		tableLibros.setItems(listaLibrosBD); 
+	}
+	
+	private ObservableList<Libro> getLibrosBD () {
+		ObservableList<Libro> listaLibrosBD = FXCollections.observableArrayList();
+		DatabaseConnection dbConnection = new DatabaseConnection();
+		Connection connection = dbConnection.getConnection();
+		String query = "select * from libros";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Libro libro = new Libro(
+						rs.getString("titulo"),
+						rs.getString("editorial"),
+						rs.getString("autor"),
+						rs.getInt("paginas")
+					);
+				listaLibrosBD.add(libro);
+			}
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaLibrosBD;
 	}
 	
 	@FXML
@@ -115,7 +148,18 @@ public class IndexController {
 		
 		int inidiceSeleccionado = tableLibros.getSelectionModel().getSelectedIndex();
 		
-		tableLibros.getItems().remove(inidiceSeleccionado);
+		System.out.println("Indice a borrar: "+inidiceSeleccionado);
+		
+		if(inidiceSeleccionado<=-1) {
+			Alert alerta = new Alert(AlertType.ERROR);
+			alerta.setTitle("Error al borrar");
+			alerta.setHeaderText("No se ha seleccionado ningun libro a borrar");
+			alerta.setContentText("Por favor, selecciona un libro");
+			alerta.showAndWait();
+		}else {
+			tableLibros.getItems().remove(inidiceSeleccionado);
+			tableLibros.getSelectionModel().clearSelection();
+		}
 	}
 	
 	public boolean esNumero (String s) {
