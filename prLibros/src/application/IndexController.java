@@ -54,9 +54,7 @@ public class IndexController {
 	private Button btnBorrar;
 	
 	private ObservableList<Libro> listaLibros =
-		FXCollections.observableArrayList(
-				new Libro("La Biblia", "Planeta", "Jesús", 500)
-		);
+		FXCollections.observableArrayList();
 	
 	public ObservableList<String> listaEditoriales = 
 		FXCollections.observableArrayList(
@@ -92,6 +90,7 @@ public class IndexController {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Libro libro = new Libro(
+						rs.getInt("id"),
 						rs.getString("titulo"),
 						rs.getString("editorial"),
 						rs.getString("autor"),
@@ -127,12 +126,37 @@ public class IndexController {
 						Integer.parseInt(txtPaginas.getText())
 				);
 				
-				listaLibros.add(l);
+				//listaLibros.add(l);
+				//tableLibros.setItems(listaLibros);
 				
 				txtTitulo.clear();
 				cbEditorial.getSelectionModel().clearSelection();
 				txtAutor.clear();
 				txtPaginas.clear();
+				
+				DatabaseConnection dbConnection = new DatabaseConnection();
+				Connection connection = dbConnection.getConnection();
+				
+				
+				try {
+					String query = "insert into libros (titulo, editorial, autor, paginas) VALUES (?, ?, ?, ?)";
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, l.getTitulo());
+					ps.setString(2, l.getEditorial());
+					ps.setString(3, l.getAutor());
+					ps.setInt(4, l.getPaginas());
+					ps.executeUpdate();
+					
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				ObservableList listaLibrosBD= getLibrosBD();
+				tableLibros.setItems(listaLibrosBD); 
+				
+				
 			} else {
 				Alert alerta = new Alert(AlertType.ERROR);
 				alerta.setTitle("Error al insertar");
@@ -157,8 +181,28 @@ public class IndexController {
 			alerta.setContentText("Por favor, selecciona un libro");
 			alerta.showAndWait();
 		}else {
-			tableLibros.getItems().remove(inidiceSeleccionado);
-			tableLibros.getSelectionModel().clearSelection();
+			//tableLibros.getItems().remove(inidiceSeleccionado);
+			//tableLibros.getSelectionModel().clearSelection();
+			DatabaseConnection dbConnection = new DatabaseConnection();
+			Connection connection = dbConnection.getConnection();
+			
+			try {
+				String query = "delete from libros where id = ?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				Libro libro = tableLibros.getSelectionModel().getSelectedItem();
+				ps.setInt(1, libro.getId());
+				ps.executeUpdate();
+				
+				tableLibros.getSelectionModel().clearSelection();
+				
+				ObservableList listaLibrosBD= getLibrosBD();
+				tableLibros.setItems(listaLibrosBD);
+				
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
