@@ -1,5 +1,10 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +73,37 @@ public class IndexController {
 		columnConsola.setCellValueFactory(new PropertyValueFactory<>("consola"));
 		columnPegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
 		
-		tableVideojuegos.setItems(listaVideojuedos);
+		ObservableList listaVideojuegosBD= getVideojuegosBD();
+		
+		tableVideojuegos.setItems(listaVideojuegosBD); 
+		
+	}
+	
+	private ObservableList<Videojuego> getVideojuegosBD () {
+		ObservableList<Videojuego> listaVideojuegosBD = FXCollections.observableArrayList();
+		DatabaseConnection dbConnection = new DatabaseConnection();
+		Connection connection = dbConnection.getConnection();
+		String query = "select * from videojuegos";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Videojuego libro = new Videojuego(
+						rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getFloat("precio"),
+						rs.getString("consola"),
+						rs.getString("pegi")
+					);
+				listaVideojuegosBD.add(libro);
+			}
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaVideojuegosBD;
 	}
 	
 	@FXML
@@ -90,12 +125,34 @@ public class IndexController {
 						cbPegi.getValue().toString()
 				);
 				
-				listaVideojuedos.add(v);
+				//listaVideojuedos.add(v);
 				
 				txtNombre.clear();
 				txtPrecio.clear();
 				cbConsola.getSelectionModel().clearSelection();
 				cbPegi.getSelectionModel().clearSelection();
+				
+				DatabaseConnection dbConnection = new DatabaseConnection();
+				Connection connection = dbConnection.getConnection();
+				
+				
+				try {
+					String query = "insert into videojuegos (nombre, precio, consola, pegi) VALUES (?, ?, ?, ?)";
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, v.getNombre());
+					ps.setFloat(2, v.getPrecio());
+					ps.setString(3, v.getConsola());
+					ps.setString(4, v.getPegi());
+					ps.executeUpdate();
+					
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				ObservableList listaVideojuegosBD= getVideojuegosBD();
+				tableVideojuegos.setItems(listaVideojuegosBD);
 			} else {
 				Alert alerta = new Alert(AlertType.ERROR);
 				alerta.setTitle("Error al insertar");
@@ -111,7 +168,38 @@ public class IndexController {
 		
 		int inidiceSeleccionado = tableVideojuegos.getSelectionModel().getSelectedIndex();
 		
-		tableVideojuegos.getItems().remove(inidiceSeleccionado);
+		System.out.println("Indice a borrar: "+inidiceSeleccionado);
+		
+		if(inidiceSeleccionado<=-1) {
+			Alert alerta = new Alert(AlertType.ERROR);
+			alerta.setTitle("Error al borrar");
+			alerta.setHeaderText("No se ha seleccionado ningun libro a borrar");
+			alerta.setContentText("Por favor, selecciona un libro");
+			alerta.showAndWait();
+		}else {
+			//tableVideojuegos.getItems().remove(inidiceSeleccionado);
+			DatabaseConnection dbConnection = new DatabaseConnection();
+			Connection connection = dbConnection.getConnection();
+			
+			try {
+				String query = "delete from videojuegos where id = ?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				Videojuego videojuego = tableVideojuegos.getSelectionModel().getSelectedItem();
+				ps.setInt(1, videojuego.getId());
+				ps.executeUpdate();
+				
+				tableVideojuegos.getSelectionModel().clearSelection();
+				
+				ObservableList listaVideojuegosBD= getVideojuegosBD();
+				tableVideojuegos.setItems(listaVideojuegosBD);
+				
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	public boolean esNumero (String s) {
