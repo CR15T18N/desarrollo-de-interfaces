@@ -42,13 +42,13 @@
       </MenuBar>
    </top>
    <center>
-      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="fondo" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane fx:id="panel_izq" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <BorderPane layoutX="48.0" layoutY="87.0" prefHeight="373.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <top>
-                        <Label text="Nuevo coches" BorderPane.alignment="CENTER">
+                        <Label fx:id="lblTitulo" text="Nuevo coche" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -70,13 +70,13 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Marca" />
-                              <Label text="Precio" GridPane.rowIndex="3" />
-                              <Label text="Modelo" GridPane.rowIndex="1" />
-                              <Label text="Estado" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtNombre" prefWidth="181.0" GridPane.columnIndex="1" />
+                              <Label fx:id="lblTitulo" text="Marca" />
+                              <Label fx:id="lblTitulo" text="Precio" GridPane.rowIndex="3" />
+                              <Label fx:id="lblTitulo" text="Modelo" GridPane.rowIndex="1" />
+                              <Label fx:id="lblTitulo" text="Estado" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtMarca" prefWidth="181.0" GridPane.columnIndex="1" />
                               <TextField fx:id="txtPrecio" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ChoiceBox fx:id="cbPegi" prefHeight="25.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="cbEstado" prefHeight="25.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="txtModelo" prefWidth="181.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
@@ -104,7 +104,7 @@
                <children>
                   <BorderPane layoutX="48.0" layoutY="87.0" prefHeight="373.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <top>
-                        <Label text="Coches" BorderPane.alignment="CENTER">
+                        <Label fx:id="lblTituloDerecha" text="Tabla de coches" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -114,7 +114,7 @@
                         </Label>
                      </top>
                      <center>
-                        <TableView fx:id="tableVideojuegos" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableCoches" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
                             <TableColumn fx:id="columnMarca" minWidth="-Infinity" prefWidth="75.0" text="Marca" />
                               <TableColumn fx:id="columnModelo" minWidth="-Infinity" prefWidth="75.0" text="Modelo" />
