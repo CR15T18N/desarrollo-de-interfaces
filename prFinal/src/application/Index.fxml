@@ -30,7 +30,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="menuItemStart" mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -48,7 +48,7 @@
                <children>
                   <BorderPane layoutX="48.0" layoutY="87.0" prefHeight="373.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <top>
-                        <Label fx:id="lblTitulo" text="Nuevo coche" BorderPane.alignment="CENTER">
+                        <Label fx:id="lblTituloIzquierda" text="Nuevo coche" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -84,12 +84,12 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="btnBorrar" mnemonicParsing="false" text="Borrar">
+                              <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#borrarCoche" text="Borrar">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="btnAniadir" mnemonicParsing="false" text="Añadir">
+                              <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#aniadirChoche" text="Añadir">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>

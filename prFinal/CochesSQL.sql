@@ -1,0 +1,9 @@
+USE bd_coches;
+
+CREATE TABLE coches(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    marca VARCHAR(30) NOT NULL,
+    modelo VARCHAR(30) NOT NULL,
+    estado VARCHAR(30) NOT NULL,
+    precio DOUBLE NOT NULL
+);
