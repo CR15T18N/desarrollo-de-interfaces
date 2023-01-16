@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfacesApuntes1", "InterfacesApuntes1.csproj", "{B026AE4B-A708-4560-B16B-924C0871831A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B026AE4B-A708-4560-B16B-924C0871831A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B026AE4B-A708-4560-B16B-924C0871831A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B026AE4B-A708-4560-B16B-924C0871831A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B026AE4B-A708-4560-B16B-924C0871831A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEE2613B-945F-4949-8FD0-91E6C481C4AE}
+	EndGlobalSection
+EndGlobal
